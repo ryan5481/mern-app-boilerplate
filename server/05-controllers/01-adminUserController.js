@@ -44,10 +44,10 @@ const AdminUserLogin = async (req, res) => {
                 delete foundUser.password
                 res.status(200).json({
                     msg: "Logged in",
-                    id: foundUser._id,
-                    email: foundUser.email,
-                    name: foundUser.name,
-                    phoneNumber: foundUser.phoneNumber,
+                    id: foundUser?._id,
+                    email: foundUser?.email,
+                    name: foundUser?.name,
+                    phoneNumber: foundUser?.phoneNumber,
                     userRole: "admin"
                 })
             } else {

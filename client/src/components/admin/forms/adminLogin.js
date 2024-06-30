@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { assignUserRole, setLoginDetails } from '../../../redux/reducers/userSlice'
 import './login.css';
 
 function AdminLoginForm() {
@@ -10,6 +12,8 @@ function AdminLoginForm() {
     const [success, setSuccess] = useState('');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const handleSubmit = async () => {
         try {
@@ -17,11 +21,26 @@ function AdminLoginForm() {
                 email,
                 password
             });
-            setSuccess('Logged in successfully');
-            setError('');
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+
+            if (response.status === 200) {
+                const res = response.data;
+                dispatch(assignUserRole(res.userRole));
+                dispatch(
+                    setLoginDetails({
+                        isLoggedIn: true,
+                        userDbId: res?.id,
+                        userDept: res?.department,
+                        email: res?.email,
+                        name: res?.name,
+                        token: res?.token
+                    })
+                );
+                setSuccess('Logged in successfully');
+                setError('');
+                navigate("/")
+            } else {
+                setError("Server error");
+            }
         } catch (error) {
             setSuccess('');
 
@@ -32,6 +51,7 @@ function AdminLoginForm() {
             }
         }
     };
+
 
     return (
         <div className='outer-container'>
