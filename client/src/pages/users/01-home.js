@@ -1,3 +1,4 @@
+import ServicesGrid from "../../components/admin/dashboard-components/editServicesGrid"
 
 
 const Home = () => {
@@ -5,7 +6,7 @@ const Home = () => {
     return (
         <>
             <div>
-                THIS IS HOME PAGE
+                <ServicesGrid />
             </div>
         </>
     )

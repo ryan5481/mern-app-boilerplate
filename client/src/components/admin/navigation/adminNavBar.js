@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './userNavBar.css';
 
 
-function UserNavBar() {
+function AdminNavBar() {
     const navigate = useNavigate()
     return (
         <div class="navbar">
@@ -19,4 +19,4 @@ function UserNavBar() {
         </div>
     )
 }
-export default UserNavBar
+export default AdminNavBar

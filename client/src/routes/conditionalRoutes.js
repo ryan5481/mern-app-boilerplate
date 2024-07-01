@@ -8,9 +8,22 @@ import AboutUs from '../pages/users/02-aboutUs'
 import ContactUs from '../pages/users/04-contactUs'
 import AdminSignUpPage from '../pages/admin/auth/01-adminSignUpPage'
 import AdminLoginPage from '../pages/admin/auth/02-adminLoginPage'
+import { useSelector } from 'react-redux'
+import AdminDashboard from '../pages/admin/01-admin-dashboard'
+import AdminNavBar from '../components/admin/navigation/adminNavBar'
 
 function ConditionalRoutes() {
 
+    const { userRole } = useSelector(state => state.user)
+
+    if (userRole === 'admin') {
+        return <AdminRoutes />
+    } else {
+        return <UserRoutes />
+    }
+}
+
+const UserRoutes = () => {
     return (
         <>
             <UserNavBar />
@@ -25,7 +38,17 @@ function ConditionalRoutes() {
             </Routes>
         </>
     )
+}
 
+const AdminRoutes = () => {
+    return (
+        <>
+            <AdminNavBar />
+            <Routes>
+                <Route path='/' element={<AdminDashboard />} />
+            </Routes>
+        </>
+    )
 }
 
 export default ConditionalRoutes
