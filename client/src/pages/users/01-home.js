@@ -1,4 +1,4 @@
-import ServicesGrid from "../../components/admin/dashboard-components/editServicesGrid"
+import ServicesGrid from "../../components/users/homepage-components/ServicesGrid"
 
 
 const Home = () => {
