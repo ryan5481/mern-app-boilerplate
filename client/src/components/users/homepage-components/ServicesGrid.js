@@ -1,61 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import "./servicesGrid.css"
 
-const services = [
-    {
-        title: "Apple Watch 7 Gen with Stainless Steel",
-        price: 300,
-        rating: 4,
-        description: "This is a digital watch",
-        image: "apple-watch.png"
-    },
-    {
-        title: "Mac Book Pro",
-        price: 900,
-        rating: 5,
-        description: "This is a digital watch",
-        image: "mbp.jpeg"
-    },
-    {
-        title: "Apple Vision Pro",
-        price: 2500,
-        rating: 3,
-        description: "IPad Pro",
-        image: "ipad.webp"
-    },
-    {
-        title: "iMac 27'",
-        price: 2499,
-        rating: 4,
-        description: "This is a digital watch",
-        image: "imac.webp"
-    },
-    {
-        title: "Mac Mini",
-        price: 599,
-        rating: 5,
-        description: "This is a digital watch",
-        image: "mm.jpeg"
-    },
-]
-
 function ServicesGrid() {
+    const [services, setServices] = useState([])
+    try {
+        const fetchServicesList = async () => {
+            const response = await axios.get("http://localhost:8000/get-services")
+            if (response) {
+                setServices(response.data.data)
+            } else {
+                console.log("Server error")
+            }
+        }
+        useEffect(() => {
+            fetchServicesList()
+        }, [])
+
+    } catch (error) {
+        console.log("Failed to fetch data")
+    }
+
+
     return (
         <div class="grid" >
-
-            {services.map((service, index) => (
+            {services && services.map((service, index) => (
                 <div class="service-card">
-                    <img src={`/assets/serviceImage/${service.image}`} alt='product' />
-                    <h2>{service.title}</h2>
-                    <h2>${service.price}</h2>
-                    <div class="rating-container">
-                        <label>Rating</label>
-                        <label>{service.rating}</label>
+                    <div class='image-container'>
+                        <img src={`/assets/serviceImage/${service.image}`} alt='product' />
+                    </div>
+                    <div class="text-container">
+                        <h2>{service.title}</h2>
+                        <h2>${service.price}</h2>
+                        <div class="rating-container">
+                            <label>Rating</label>
+                            <label>{service.rating}</label>
+                        </div>
                     </div>
                 </div>
-            ))
-            }
-
+            ))}
         </div>
     )
 }

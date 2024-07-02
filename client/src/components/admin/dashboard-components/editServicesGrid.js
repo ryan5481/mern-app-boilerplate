@@ -1,49 +1,45 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import './editservice.css'
 
 function EditServicesGrid() {
+
+    const [services, setServices] = useState([])
+    try {
+        const fetchServicesList = async () => {
+            const response = await axios.get("http://localhost:8000/get-services")
+            if (response) {
+                setServices(response.data.data)
+            } else {
+                console.log("Server error")
+            }
+        }
+        useEffect(() => {
+            fetchServicesList()
+        }, [])
+
+    } catch (error) {
+        console.log("Failed to fetch data")
+    }
+
     return (
         <>
             <div class="cart">
-                <div class="cart-item">
-                    <div class="product">
-                        < img src="1.jpg" alt="" />
-                        <span>Monthly Schedule</span>
+                {services.map((item, index) => (
+                    <div class="cart-item">
+                        <div class="product">
+                            < img src={`/assets/serviceImage/${item.image}`} alt="" />
+                            <span>{item.title}</span>
+                        </div>
+                        <div class="qty">
+                            <p>{item.rating}</p>
+                        </div>
+                        <div class="price">${item.price}</div>
+                        <div class="action"><button class="remove-btn">Remove</button></div>
                     </div>
-                    <div class="qty">
-                        <button class="qty-btn">-</button>
-                        <input type="text" value="1" />
-                        <button class="qty-btn">+</button>
-                    </div>
-                    <div class="price">$10</div>
-                    <div class="action"><button class="remove-btn">Remove</button></div>
-                </div>
-                <div class="cart-item">
-                    <div class="product">
-                        <img src="2.jpg" alt="" />
-                        <span>Event Reminder</span>
-                    </div>
-                    <div class="qty">
-                        <button class="qty-btn">-</button>
-                        <input type="text" value="1" />
-                        <button class="qty-btn">+</button>
-                    </div>
-                    <div class="price">$10</div>
-                    <div class="action"><button class="remove-btn">Remove</button></div>
-                </div>
-                <div class="cart-item">
-                    <div class="product">
-                        <img src="3.jpg" alt="" />
-                        <span>Customize Routine</span>
-                    </div>
-                    <div class="qty">
-                        <button class="qty-btn">-</button>
-                        <input type="text" value="1" />
-                        <button class="qty-btn">+</button>
-                    </div>
-                    <div class="price">$15</div>
-                    <div class="action"><button class="remove-btn">Remove</button></div>
-                </div>
+                ))
+
+                }
             </div>
         </>
     )

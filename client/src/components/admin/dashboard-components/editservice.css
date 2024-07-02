@@ -36,15 +36,21 @@ body {
     width: 100px;
 }
 
+.product span {
+    width: 200px;
+}
+
 .qty {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.qty input {
+.qty p {
     width: 30px;
     text-align: center;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .qty-btn {
