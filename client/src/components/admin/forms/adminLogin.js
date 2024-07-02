@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { assignUserRole, setLoginDetails } from '../../../redux/reducers/userSlice'
 import './login.css';
 
+const baseUrl = process.env.REACT_APP_BASE_URL
+
 function AdminLoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +18,7 @@ function AdminLoginForm() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/admin-login', {
+            const response = await axios.post(`${baseUrl}/admin-login`, {
                 email,
                 password
             });

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './editservice.css'
 
+const baseUrl = process.env.REACT_APP_BASE_URL
+
 function EditServicesGrid() {
 
     const [services, setServices] = useState([])
     try {
         const fetchServicesList = async () => {
-            const response = await axios.get("http://localhost:8000/get-services")
+            const response = await axios.get(`${baseUrl}/get-services`)
             if (response) {
                 setServices(response.data.data)
             } else {
